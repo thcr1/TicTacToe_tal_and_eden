@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,17 +61,33 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    protected void restartGame(){
+    private void changePlayerTurn(boolean isX){
+        XTurn = isX;
+
+            ImageView playerTurn = (ImageView) findViewById(R.id.tiktaktoe_text);
+        if(isX){
+            playerTurn.setImageResource(R.drawable.xplay);
+        }else{
+            playerTurn.setImageResource(R.drawable.oplay);
+        }
+
+    }
+
+    private void restartGame(){
+        // Update variables
         movesCounter = 0;
         didWin = false;
-        XTurn = true;
+
+        // Start new game with X
+        changePlayerTurn(true);
 
         findViewById(R.id.tiktaktoe_text).setVisibility(View.INVISIBLE);
 
+        // Restart board
         for(int i=0; i<BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++)
             {
-                // board.setImageResource(R.drawable.empty);
+                board[i][j].setImageResource(R.drawable.empty);
             }
         }
     }
@@ -87,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
                 setOnClick(board[i][j], i, j);
             }
         }
+
+        // Set play again button onClick
+        ImageButton replayBtn =(ImageButton)findViewById(R.id.tictactoe_replay);
+        replayBtn.setVisibility(View.INVISIBLE);
+        replayBtn.setOnClickListener(v -> restartGame());
     }
 
     private void setOnClick(final ImageView btn, int i, int j){
@@ -104,10 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (XTurn) {
                     btn.setImageResource(R.drawable.x);
-                    playerTurn.setImageResource(R.drawable.oplay);
                 } else {
                     btn.setImageResource(R.drawable.o);
-                    playerTurn.setImageResource(R.drawable.xplay);
                 }
                 movesCounter++;
 
@@ -123,13 +143,13 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
                 } else if (movesCounter == 9 ){ // If no winner check if board is full
                     playerTurn.setImageResource(R.drawable.nowin);
+                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
+                }else{ // If no player won and there is still empty places on the board
+                    changePlayerTurn(!XTurn);
                 }
-
-                findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
-                // If game not over change turns
-                XTurn = !XTurn;
             }
         });
     }
+
 }
 
