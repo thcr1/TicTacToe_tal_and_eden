@@ -63,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
     protected void restartGame(){
         movesCounter = 0;
         didWin = false;
+        XTurn = true;
+
+        findViewById(R.id.tiktaktoe_text).setVisibility(View.INVISIBLE);
+
         for(int i=0; i<BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-               // remove img
+            for (int j = 0; j < BOARD_SIZE; j++)
+            {
+                // board.setImageResource(R.drawable.empty);
             }
         }
     }
@@ -120,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     playerTurn.setImageResource(R.drawable.nowin);
                 }
 
-                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
+                findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
                 // If game not over change turns
                 XTurn = !XTurn;
             }
