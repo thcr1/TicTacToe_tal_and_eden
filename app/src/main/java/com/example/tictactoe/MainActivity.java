@@ -1,9 +1,9 @@
 package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    protected void restartGame(){
+        movesCounter = 0;
+        didWin = false;
+        for(int i=0; i<BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+               // remove img
+            }
+        }
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -105,9 +115,12 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         playerTurn.setImageResource(R.drawable.owin);
                     }
+                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
                 } else if (movesCounter == 9 ){ // If no winner check if board is full
                     playerTurn.setImageResource(R.drawable.nowin);
                 }
+
+                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
                 // If game not over change turns
                 XTurn = !XTurn;
             }
