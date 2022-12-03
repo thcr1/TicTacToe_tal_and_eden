@@ -18,47 +18,18 @@ public class MainActivity extends AppCompatActivity {
 
     // Return true if current player won/ false if not
     protected boolean checkWinInCurrentPosition(int positionI, int positionJ, Drawable.ConstantState player){
-        //check col
-        for(int j = 0; j < BOARD_SIZE; j++){
-            if(board[positionI][j].getDrawable().getConstantState() != player)
-                break;
-            if(j == BOARD_SIZE-1){
-                return true;
-            }
+        int col, row, diag, rdiag;
+        col = row = diag = rdiag = 0;
+
+        // Accumulates each of the player's possibilities to win for the chosen cell
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            if (board[positionI][i].getDrawable().getConstantState() == player) col++;
+            if (board[i][positionJ].getDrawable().getConstantState() == player) row++;
+            if (board[i][i].getDrawable().getConstantState() == player) diag++;
+            if (board[i][(BOARD_SIZE-1)-i].getDrawable().getConstantState() == player) rdiag++;
         }
 
-        //check row
-        for(int i = 0; i < BOARD_SIZE; i++){
-            if(board[i][positionJ].getDrawable().getConstantState() != player)
-                break;
-            if(i == BOARD_SIZE-1){
-                return true;
-            }
-        }
-
-        //check diag
-        if(positionI == positionJ){
-            for(int i = 0; i < BOARD_SIZE; i++){
-                if(board[i][i].getDrawable().getConstantState() != player)
-                    break;
-                if(i == BOARD_SIZE-1){
-                    return true;
-                }
-            }
-        }
-
-        //check anti diag
-        if(positionI+positionJ == BOARD_SIZE - 1){
-            for(int i = 0; i < BOARD_SIZE; i++){
-                if(board[i][(BOARD_SIZE-1)-i].getDrawable().getConstantState() != player)
-                    break;
-                if(i == BOARD_SIZE-1){
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return (col == BOARD_SIZE || row == BOARD_SIZE || diag == BOARD_SIZE || rdiag == BOARD_SIZE);
     }
 
     private void changePlayerTurn(boolean isX){
@@ -116,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
             ImageView playerTurn = (ImageView) findViewById(R.id.tiktaktoe_text);
 
             // If not already pressed
-            final Drawable.ConstantState X = getDrawable( R.drawable.x).getConstantState();
-            final Drawable.ConstantState O = getDrawable( R.drawable.o).getConstantState();
+            final Drawable.ConstantState X = getDrawable(R.drawable.x).getConstantState();
+            final Drawable.ConstantState O = getDrawable(R.drawable.o).getConstantState();
 
             if((btn.getDrawable().getConstantState() !=  O)
                &&
