@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         // Start new game with X
         changePlayerTurn(true);
 
-        findViewById(R.id.tiktaktoe_text).setVisibility(View.INVISIBLE);
+        findViewById(R.id.tictactoe_replay).setVisibility(View.INVISIBLE);
 
         // Restart board
         for(int i=0; i<BOARD_SIZE; i++) {
@@ -140,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         playerTurn.setImageResource(R.drawable.owin);
                     }
-                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tictactoe_replay).setVisibility(View.VISIBLE);
                 } else if (movesCounter == 9 ){ // If no winner check if board is full
                     playerTurn.setImageResource(R.drawable.nowin);
-                    findViewById(R.id.tiktaktoe_text).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tictactoe_replay).setVisibility(View.VISIBLE);
                 }else{ // If no player won and there is still empty places on the board
                     changePlayerTurn(!XTurn);
                 }
