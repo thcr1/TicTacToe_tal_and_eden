@@ -7,29 +7,64 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int BOARD_SIZE = 3;
 
-    boolean didWin = false;
+    int winLineImageNumber = 0;
     boolean XTurn = true;
     ImageView[][] board = new ImageView[BOARD_SIZE][BOARD_SIZE];
     int movesCounter = 0;
 
     // Return true if current player won/ false if not
-    protected boolean checkWinInCurrentPosition(int positionI, int positionJ, Drawable.ConstantState player){
-        int col, row, diag, rdiag;
-        col = row = diag = rdiag = 0;
+    private WinDirection checkWinInCurrentPosition(int positionI, int positionJ, Drawable.ConstantState player){
+        HashMap<WinDirection, Integer> winCounterDict = new HashMap<WinDirection, Integer>() {{
+            put(WinDirection.WinCol, 0);
+            put(WinDirection.WinRow, 0);
+            put(WinDirection.WinDiag, 0);
+            put(WinDirection.WinRdiag, 0);}};
 
         // Accumulates each of the player's possibilities to win for the chosen cell
         for (int i = 0; i < BOARD_SIZE; i++) {
-            if (board[positionI][i].getDrawable().getConstantState() == player) col++;
-            if (board[i][positionJ].getDrawable().getConstantState() == player) row++;
-            if (board[i][i].getDrawable().getConstantState() == player) diag++;
-            if (board[i][(BOARD_SIZE-1)-i].getDrawable().getConstantState() == player) rdiag++;
+            if (board[positionI][i].getDrawable().getConstantState() == player)
+                winCounterDict.put(WinDirection.WinRow, winCounterDict.get(WinDirection.WinRow) + 1);
+            if (board[i][positionJ].getDrawable().getConstantState() == player)
+                winCounterDict.put(WinDirection.WinCol, winCounterDict.get(WinDirection.WinCol) + 1);
+            if (board[i][i].getDrawable().getConstantState() == player)
+                winCounterDict.put(WinDirection.WinDiag, winCounterDict.get(WinDirection.WinDiag) + 1);
+            if (board[i][(BOARD_SIZE-1)-i].getDrawable().getConstantState() == player)
+                winCounterDict.put(WinDirection.WinRdiag, winCounterDict.get(WinDirection.WinRdiag) + 1);
         }
+        
+        WinDirection winDirection = Collections.max(winCounterDict.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+        if (winCounterDict.get(winDirection) == 3) return winDirection;
+        return WinDirection.NoWin;
+    }
 
-        return (col == BOARD_SIZE || row == BOARD_SIZE || diag == BOARD_SIZE || rdiag == BOARD_SIZE);
+    protected int getWinLineEnum(int positionI, int positionJ, Drawable.ConstantState player) {
+        WinDirection winDirection = checkWinInCurrentPosition(positionI, positionJ, player);
+
+        if (winDirection == WinDirection.NoWin) return 0;
+
+        if (winDirection == WinDirection.WinCol) {
+            if (positionJ == 0) return R.id.vertical_left_line;
+            if (positionJ == 1) return R.id.vertical_middle_line;
+            if (positionJ == 2) return R.id.vertical_right_line;
+        } else if(winDirection == WinDirection.WinRow) {
+            if (positionI == 0) return R.id.horizontal_top_line;
+            if (positionI == 1) return R.id.horizontal_middle_line;
+            if (positionI == 2) return R.id.horizontal_bottom_line;
+        } else if (winDirection == WinDirection.WinDiag) {
+            return R.id.diagnole_line;
+        }
+        return R.id.rdiagonal_line;
     }
 
     private void changePlayerTurn(boolean isX){
@@ -47,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
     private void restartGame(){
         // Update variables
         movesCounter = 0;
-        didWin = false;
+
+        findViewById(winLineImageNumber).setVisibility(View.INVISIBLE);
+        winLineImageNumber = 0;
 
         // Start new game with X
         changePlayerTurn(true);
@@ -93,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             if((btn.getDrawable().getConstantState() !=  O)
                &&
                (btn.getDrawable().getConstantState() !=  X)
-               && !didWin) {
+               && winLineImageNumber == 0) {
 
                 if (XTurn) {
                     btn.setImageResource(R.drawable.x);
@@ -103,9 +140,10 @@ public class MainActivity extends AppCompatActivity {
                 movesCounter++;
 
                 // Check if there is a winner
-                didWin = checkWinInCurrentPosition(i,j,btn.getDrawable().getConstantState());
+                winLineImageNumber = getWinLineEnum(i,j,btn.getDrawable().getConstantState());
 
-                if (didWin){
+                if (winLineImageNumber != 0){
+                    findViewById(winLineImageNumber).setVisibility(View.VISIBLE);
                     if(XTurn) {
                         playerTurn.setImageResource(R.drawable.xwin);
                     } else {

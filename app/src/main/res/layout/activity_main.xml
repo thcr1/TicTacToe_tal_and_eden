@@ -67,7 +67,7 @@
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toStartOf="@+id/tiktaktoe_btn3"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tiktaktoe_btn1"
         app:layout_constraintTop_toBottomOf="@+id/tiktaktoe_btn2"
         app:srcCompat="@drawable/empty" />
@@ -140,5 +140,100 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tiktaktoe_text" />
+
+    <ImageView
+        android:id="@+id/vertical_middle_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark4" />
+
+    <ImageView
+        android:id="@+id/vertical_right_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/mark5" />
+
+    <ImageView
+        android:id="@+id/vertical_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark3" />
+
+    <ImageView
+        android:id="@+id/horizontal_middle_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="91"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/mark4" />
+
+    <ImageView
+        android:id="@+id/horizontal_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="91"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark3" />
+
+    <ImageView
+        android:id="@+id/horizontal_bottom_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="91"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark5" />
+
+    <ImageView
+        android:id="@+id/diagnole_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark1" />
+
+    <ImageView
+        android:id="@+id/rdiagonal_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="@+id/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:srcCompat="@drawable/mark2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
